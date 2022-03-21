@@ -7,14 +7,15 @@
 #include "serial.h"
 #include "timer.h"
 
-void main (void) {
+void main(void) {
+    // I left thease in main since they are needed on my shield to not burn blabla
+    DDRB &= ~(1 << PB3);  // Set PB3 as output
+    DDRB &= ~(1 << PB0);  // Set PB0 as input
 
-	LED_init();
-	uart_init();
-	timer_init();
+    LED_init();
+    uart_init();
+    timer_init();
 
-	while (1) {
-		// ...
-	}
+    // while (1) {
+    // }
 }
-
