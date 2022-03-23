@@ -1,9 +1,9 @@
 #include "timer.h"
 
 #include <avr/io.h>
-
-void timer_init() {
-    // ...
+int timeMs = 0;
+int then = 0;
+void timer0() {
 }
 void timer2() {
     // Timer mode with 1024 prescaler

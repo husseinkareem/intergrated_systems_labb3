@@ -1,15 +1,15 @@
-// screen -S arduino /dev/ttyACM0 38400
+// För att kompilera skriv i terminalen -> make && screen -S arduino /dev/ttyACM0 38400
+// Tryck på knappen på din shöld.
 
 #include <avr/interrupt.h>
 #include <avr/io.h>
 #include <avr/pgmspace.h>
 #include <stdio.h>
 
-#include "stdbool.h"
-
-//#include "debounce.h"
+#include "debounce.h"
 #include "led.h"
 #include "serial.h"
+#include "stdbool.h"
 #include "timer.h"
 
 int main() {
@@ -23,21 +23,12 @@ int main() {
     uart_init();
     timer2();
 
-    int timeMs = 0;
-    int then = 0;
     while (1) {
-        if (bit_is_set(TIFR2, OCF2A)) {
-            timeMs++;              // Global time in MS
-            TIFR2 = (1 << OCF2A);  // reset the flag
-        }
-        if (bit_is_set(PIND, PD2)) {
-            if (then == 0) {
-                then = timeMs;
-                printf("released\r\n");
-            }
-        } else if (then != 0 && (timeMs - then) > 10) {
-            then = 0;
-            printf("pushed\r\n");
+        debounce_button();
+
+        if (bit_is_set(TIFR2, OCF2A)) {  // millis
+            timeMs++;                    // Global time in MS
+            TIFR2 = (1 << OCF2A);        // reset the flag
         }
     }
 }

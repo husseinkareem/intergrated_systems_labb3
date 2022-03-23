@@ -5,7 +5,8 @@ SOURCES = \
 		  main.c \
 		  serial.c \
 		  led.c \
-		  timer.c
+		  timer.c\
+		  debounce.c
 
 PORT = /dev/ttyACM0# Arduinons serieport — kan vara ttyACM1, kolla dmesg!
 
