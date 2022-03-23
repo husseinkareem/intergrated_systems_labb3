@@ -3,7 +3,19 @@
 #include <avr/io.h>
 int timeMs = 0;
 int then = 0;
+
 void timer0() {
+    // Fast PWM-mod, 0xFF som TOP. Table 19-4.
+    TCCR0A &= ~(1 << COM0A0);  // 19-17.
+    TCCR0A |= (1 << COM0A1);
+
+    TCCR0A |= (1 << WGM00);   // WGM00 -> 1
+    TCCR0A |= (1 << WGM01);   // WGM01 -> 1
+    TCCR0B &= ~(1 << WGM02);  // WGM02 -> 0
+    // Prescaler = 64 Table 15-9.
+    TCCR0B |= (1 << CS00);   // CS00 -> 1
+    TCCR0B |= (1 << CS01);   // CS01 -> 1
+    TCCR0B &= ~(1 << CS02);  // CS02 -> 0
 }
 void timer2() {
     // Timer mode with 1024 prescaler
